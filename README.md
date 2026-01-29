@@ -1,12 +1,37 @@
-# Persistent AI Memory: RLM + Mempheromone
+<div align="center">
 
-Give your AI persistent memory that loads once per session and queries instantly.
+# 🦅 Legal-Claw-RLMemory 🦅
 
-[🇪🇸 Versión en Español](README_ES.md)
+### *Persistent AI Memory for Justice & Liberty*
+
+[![FREE Forever](https://img.shields.io/badge/FREE-Forever-red?style=for-the-badge&logo=handshake&logoColor=white)](MISSION.md)
+[![Built in America](https://img.shields.io/badge/Built_in-America-blue?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ibreitenbach)
+[![For All Americans](https://img.shields.io/badge/For_All-Americans-darkblue?style=for-the-badge&logo=heart&logoColor=white)](CONTRIBUTING.md)
+
+[![Immigration Law](https://img.shields.io/badge/Immigration-Law_Research-DC143C?style=flat-square)](examples/legal-research/IMMIGRATION_LAW_GUIDE.md)
+[![Know Your Rights](https://img.shields.io/badge/Know_Your-Rights-1E3A8A?style=flat-square)](MISSION.md)
+[![Battle Tested](https://img.shields.io/badge/Battle_Tested-4,994+_Conversations-B31942?style=flat-square)](docs/ARCHITECTURE.md)
+[![Zero Cost](https://img.shields.io/badge/Cost-$0_Forever-0A3161?style=flat-square)](MISSION.md)
 
 ---
 
-## 🌎 Built for All Americans - FREE Forever
+**🗽 Give your AI persistent memory that loads once per session and queries instantly 🗽**
+
+*"Give me your tired, your poor, your huddled masses yearning to breathe free."*
+
+[🇺🇸 English](README.md) | [🇪🇸 Español](README_ES.md)
+
+---
+
+</div>
+
+<div align="center">
+
+## 🗽 Built for All Americans - FREE Forever 🦅
+
+**🔴⚪🔵 Access to Justice is a Fundamental Right 🔴⚪🔵**
+
+</div>
 
 **We are a nation of immigrants.** From every corner of the world, people have come to America bringing their cultures, languages, and dreams. This project celebrates that heritage.
 
@@ -336,10 +361,39 @@ MIT License - see LICENSE file
 
 ## Contributing
 
+**🇺🇸 Join Us in Making Legal Information Accessible to All Americans 🇺🇸**
+
 Contributions welcome! This is a production-tested system with real-world usage.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to help build technology that serves **all Americans**.
 
 ---
 
-**Built by Ike Breitenbach**
+<div align="center">
+
+### 🗽 Built for America, By Americans, For All Americans 🗽
+
 **Production-tested with 4,994+ conversations**
 **Battle-hardened in daily multi-agent use**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Open Source](https://img.shields.io/badge/Open-Source-red?style=flat-square&logo=github)](https://github.com/Ibreitenbach/Legal-Claw-RLMemory)
+[![Free Forever](https://img.shields.io/badge/Free-Forever-darkblue?style=flat-square&logo=handshake)](MISSION.md)
+
+---
+
+🦅 **E Pluribus Unum** - *Out of Many, One* 🦅
+
+*Built by Ike Breitenbach*
+
+**Made in America with ❤️ for All Americans**
+
+🇺🇸 🇲🇽 🇨🇳 🇮🇳 🇵🇭 🇻🇳 🇰🇷 🇯🇵 🇪🇹 🇳🇬 🇮🇹 🇵🇱 🇩🇪 🇮🇪 🏳️‍🌈 ✊🏽 🕊️
+
+*"The strength of America is in its diversity"*
+
+---
+
+**Access to Justice is a Fundamental Right**
+
+</div>

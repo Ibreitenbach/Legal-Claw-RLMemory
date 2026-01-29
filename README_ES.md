@@ -1,12 +1,37 @@
-# Persistent AI Memory: RLM + Mempheromone
+<div align="center">
 
-Dale a tu IA memoria persistente que se carga una vez por sesión y consulta instantáneamente.
+# 🦅 Legal-Claw-RLMemory 🦅
 
-[🇺🇸 English Version](README.md)
+### *Memoria Persistente de IA para Justicia y Libertad*
+
+[![GRATIS Para Siempre](https://img.shields.io/badge/GRATIS-Para_Siempre-red?style=for-the-badge&logo=handshake&logoColor=white)](MISSION.md)
+[![Hecho en América](https://img.shields.io/badge/Hecho_en-América-blue?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ibreitenbach)
+[![Para Todos los Estadounidenses](https://img.shields.io/badge/Para_Todos_los-Estadounidenses-darkblue?style=for-the-badge&logo=heart&logoColor=white)](CONTRIBUTING.md)
+
+[![Ley de Inmigración](https://img.shields.io/badge/Ley_de-Inmigración-DC143C?style=flat-square)](examples/legal-research/IMMIGRATION_LAW_GUIDE.md)
+[![Conozca Sus Derechos](https://img.shields.io/badge/Conozca_Sus-Derechos-1E3A8A?style=flat-square)](MISSION.md)
+[![Probado en Batalla](https://img.shields.io/badge/Probado_en_Batalla-4,994+_Conversaciones-B31942?style=flat-square)](docs/ARCHITECTURE.md)
+[![Costo Cero](https://img.shields.io/badge/Costo-$0_Para_Siempre-0A3161?style=flat-square)](MISSION.md)
 
 ---
 
-## 🌎 Construido para Todos los Estadounidenses - GRATIS Para Siempre
+**🗽 Dale a tu IA memoria persistente que se carga una vez por sesión y consulta instantáneamente 🗽**
+
+*"Dame a tus cansados, tus pobres, tus masas hacinadas anhelando respirar libremente."*
+
+[🇺🇸 English](README.md) | [🇪🇸 Español](README_ES.md)
+
+---
+
+</div>
+
+<div align="center">
+
+## 🗽 Construido para Todos los Estadounidenses - GRATIS Para Siempre 🦅
+
+**🔴⚪🔵 El Acceso a la Justicia es un Derecho Fundamental 🔴⚪🔵**
+
+</div>
 
 **Somos una nación de inmigrantes.** Desde todos los rincones del mundo, personas han venido a Estados Unidos trayendo sus culturas, idiomas y sueños. Este proyecto celebra esa herencia.
 
@@ -337,10 +362,39 @@ Licencia MIT - ver archivo LICENSE
 
 ## Contribuciones
 
+**🇺🇸 Únete a Nosotros para Hacer la Información Legal Accesible a Todos los Estadounidenses 🇺🇸**
+
 ¡Contribuciones bienvenidas! Este es un sistema probado en producción con uso en el mundo real.
+
+Ver [CONTRIBUTING.md](CONTRIBUTING.md) para cómo ayudar a construir tecnología que sirve a **todos los estadounidenses**.
 
 ---
 
-**Construido por Ike Breitenbach**
+<div align="center">
+
+### 🗽 Construido para América, Por Estadounidenses, Para Todos los Estadounidenses 🗽
+
 **Probado en producción con más de 4,994 conversaciones**
 **Endurecido en batalla con uso multi-agente diario**
+
+[![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Código Abierto](https://img.shields.io/badge/Código-Abierto-red?style=flat-square&logo=github)](https://github.com/Ibreitenbach/Legal-Claw-RLMemory)
+[![Gratis Para Siempre](https://img.shields.io/badge/Gratis-Para_Siempre-darkblue?style=flat-square&logo=handshake)](MISSION.md)
+
+---
+
+🦅 **E Pluribus Unum** - *De Muchos, Uno* 🦅
+
+*Construido por Ike Breitenbach*
+
+**Hecho en América con ❤️ para Todos los Estadounidenses**
+
+🇺🇸 🇲🇽 🇨🇳 🇮🇳 🇵🇭 🇻🇳 🇰🇷 🇯🇵 🇪🇹 🇳🇬 🇮🇹 🇵🇱 🇩🇪 🇮🇪 🏳️‍🌈 ✊🏽 🕊️
+
+*"La fortaleza de América está en su diversidad"*
+
+---
+
+**El Acceso a la Justicia es un Derecho Fundamental**
+
+</div>
