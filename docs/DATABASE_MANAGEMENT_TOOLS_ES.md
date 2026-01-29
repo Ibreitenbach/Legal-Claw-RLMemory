@@ -1,29 +1,29 @@
-# Database Management MCP Tools
+# Herramientas MCP de Gestión de Base de Datos
 
-**Purpose**: Essential database management and monitoring tools for mempheromone system.
+**Propósito**: Herramientas esenciales de gestión y monitoreo de base de datos para el sistema mempheromone.
 
-**Location**: These tools should be included in the core MCP server (`mcp-server/src/tools/db_management/`)
+**Ubicación**: Estas herramientas deben incluirse en el servidor MCP principal (`mcp-server/src/tools/db_management/`)
 
-[🇪🇸 Versión en Español](DATABASE_MANAGEMENT_TOOLS_ES.md)
+[🇺🇸 English Version](DATABASE_MANAGEMENT_TOOLS.md)
 
 ---
 
-## Tool Catalog
+## Catálogo de Herramientas
 
-### 1. Database Statistics
+### 1. Estadísticas de Base de Datos
 
-**Tool**: `get_database_stats`
+**Herramienta**: `get_database_stats`
 
-**Purpose**: Get overview of database health and size
+**Propósito**: Obtener visión general de la salud y tamaño de la base de datos
 
-**Implementation**:
+**Implementación**:
 
 ```typescript
 import { z } from 'zod';
 import { Pool } from 'pg';
 
 const GetDatabaseStatsSchema = z.object({
-  include_details: z.boolean().default(false).describe('Include detailed table stats')
+  include_details: z.boolean().default(false).describe('Incluir estadísticas detalladas de tablas')
 });
 
 export async function get_database_stats(
@@ -32,7 +32,7 @@ export async function get_database_stats(
 ): Promise<string> {
   const { include_details } = args;
 
-  // Overall stats
+  // Estadísticas generales
   const statsQuery = `
     SELECT
       (SELECT COUNT(*) FROM debugging_facts) as debugging_facts,
@@ -52,27 +52,27 @@ export async function get_database_stats(
   const result = await pool.query(statsQuery);
   const stats = result.rows[0];
 
-  let output = `📊 Mempheromone Database Statistics\n\n`;
-  output += `Memory Counts:\n`;
-  output += `  Debugging Facts: ${stats.debugging_facts}\n`;
-  output += `  Claude Memories: ${stats.claude_memories}\n`;
-  output += `  Crystallizations: ${stats.crystallizations}\n`;
-  output += `  Session Narratives: ${stats.narratives}\n`;
-  output += `  Wisdom Entries: ${stats.wisdom_entries}\n`;
-  output += `  Embeddings: ${stats.embeddings}\n`;
-  output += `  Memory Boxes: ${stats.memory_boxes}\n`;
-  output += `  Trace Links: ${stats.trace_links}\n\n`;
+  let output = `📊 Estadísticas de Base de Datos Mempheromone\n\n`;
+  output += `Conteos de Memoria:\n`;
+  output += `  Hechos de Depuración: ${stats.debugging_facts}\n`;
+  output += `  Memorias de Claude: ${stats.claude_memories}\n`;
+  output += `  Cristalizaciones: ${stats.crystallizations}\n`;
+  output += `  Narrativas de Sesión: ${stats.narratives}\n`;
+  output += `  Entradas de Sabiduría: ${stats.wisdom_entries}\n`;
+  output += `  Incrustaciones: ${stats.embeddings}\n`;
+  output += `  Cajas de Memoria: ${stats.memory_boxes}\n`;
+  output += `  Enlaces de Rastreo: ${stats.trace_links}\n\n`;
 
-  output += `Quality Metrics:\n`;
-  output += `  Average Pheromone: ${parseFloat(stats.avg_pheromone).toFixed(2)}\n`;
-  output += `  Expert Facts (≥15): ${stats.expert_facts}\n`;
-  output += `  Solid Facts (≥10): ${stats.solid_facts}\n\n`;
+  output += `Métricas de Calidad:\n`;
+  output += `  Feromona Promedio: ${parseFloat(stats.avg_pheromone).toFixed(2)}\n`;
+  output += `  Hechos Expertos (≥15): ${stats.expert_facts}\n`;
+  output += `  Hechos Sólidos (≥10): ${stats.solid_facts}\n\n`;
 
   const dbSizeMB = (parseInt(stats.db_size_bytes) / 1024 / 1024).toFixed(2);
-  output += `Database Size: ${dbSizeMB} MB\n`;
+  output += `Tamaño de Base de Datos: ${dbSizeMB} MB\n`;
 
   if (include_details) {
-    // Table sizes
+    // Tamaños de tablas
     const tableSizeQuery = `
       SELECT
         schemaname,
@@ -86,7 +86,7 @@ export async function get_database_stats(
 
     const tableSizes = await pool.query(tableSizeQuery);
 
-    output += `\nTop 10 Tables by Size:\n`;
+    output += `\nTop 10 Tablas por Tamaño:\n`;
     for (const row of tableSizes.rows) {
       output += `  ${row.tablename}: ${row.size}\n`;
     }
@@ -97,20 +97,20 @@ export async function get_database_stats(
 
 export const get_database_stats_tool = {
   name: 'get_database_stats',
-  description: 'Get overview of mempheromone database health, memory counts, and quality metrics',
+  description: 'Obtener visión general de salud, conteos de memoria y métricas de calidad de la base de datos mempheromone',
   inputSchema: GetDatabaseStatsSchema
 };
 ```
 
 ---
 
-### 2. Pheromone Distribution Analysis
+### 2. Análisis de Distribución de Feromonas
 
-**Tool**: `get_pheromone_distribution`
+**Herramienta**: `get_pheromone_distribution`
 
-**Purpose**: Analyze pheromone score distribution to understand memory quality
+**Propósito**: Analizar la distribución de puntuación de feromonas para entender la calidad de memoria
 
-**Implementation**:
+**Implementación**:
 
 ```typescript
 const GetPheromoneDistributionSchema = z.object({
@@ -123,18 +123,18 @@ export async function get_pheromone_distribution(
 ): Promise<string> {
   const { memory_type } = args;
 
-  let output = `📈 Pheromone Score Distribution\n\n`;
+  let output = `📈 Distribución de Puntuación de Feromonas\n\n`;
 
   if (memory_type === 'debugging_facts' || memory_type === 'all') {
     const debuggingQuery = `
       SELECT
         CASE
-          WHEN pheromone_score >= 20 THEN 'Expert+ (20)'
-          WHEN pheromone_score >= 15 THEN 'Expert (15-19)'
-          WHEN pheromone_score >= 12 THEN 'Solid+ (12-14)'
-          WHEN pheromone_score >= 10 THEN 'Solid (10-11)'
-          WHEN pheromone_score >= 5 THEN 'Unproven (5-9)'
-          ELSE 'Low (<5)'
+          WHEN pheromone_score >= 20 THEN 'Experto+ (20)'
+          WHEN pheromone_score >= 15 THEN 'Experto (15-19)'
+          WHEN pheromone_score >= 12 THEN 'Sólido+ (12-14)'
+          WHEN pheromone_score >= 10 THEN 'Sólido (10-11)'
+          WHEN pheromone_score >= 5 THEN 'No Probado (5-9)'
+          ELSE 'Bajo (<5)'
         END as tier,
         COUNT(*) as count,
         AVG(pheromone_score) as avg_score,
@@ -147,10 +147,10 @@ export async function get_pheromone_distribution(
 
     const result = await pool.query(debuggingQuery);
 
-    output += `Debugging Facts:\n`;
+    output += `Hechos de Depuración:\n`;
     for (const row of result.rows) {
       const pct = (row.count / result.rows.reduce((sum, r) => sum + parseInt(r.count), 0) * 100).toFixed(1);
-      output += `  ${row.tier}: ${row.count} (${pct}%) - avg: ${parseFloat(row.avg_score).toFixed(2)}\n`;
+      output += `  ${row.tier}: ${row.count} (${pct}%) - prom: ${parseFloat(row.avg_score).toFixed(2)}\n`;
     }
     output += '\n';
   }
@@ -159,12 +159,12 @@ export async function get_pheromone_distribution(
     const boxesQuery = `
       SELECT
         CASE
-          WHEN pheromone_score >= 20 THEN 'Expert+ (20)'
-          WHEN pheromone_score >= 15 THEN 'Expert (15-19)'
-          WHEN pheromone_score >= 12 THEN 'Solid+ (12-14)'
-          WHEN pheromone_score >= 10 THEN 'Solid (10-11)'
-          WHEN pheromone_score >= 5 THEN 'Unproven (5-9)'
-          ELSE 'Low (<5)'
+          WHEN pheromone_score >= 20 THEN 'Experto+ (20)'
+          WHEN pheromone_score >= 15 THEN 'Experto (15-19)'
+          WHEN pheromone_score >= 12 THEN 'Sólido+ (12-14)'
+          WHEN pheromone_score >= 10 THEN 'Sólido (10-11)'
+          WHEN pheromone_score >= 5 THEN 'No Probado (5-9)'
+          ELSE 'Bajo (<5)'
         END as tier,
         COUNT(*) as count,
         AVG(pheromone_score) as avg_score,
@@ -177,9 +177,9 @@ export async function get_pheromone_distribution(
 
     const result = await pool.query(boxesQuery);
 
-    output += `Memory Boxes:\n`;
+    output += `Cajas de Memoria:\n`;
     for (const row of result.rows) {
-      output += `  ${row.tier}: ${row.count} boxes - avg: ${parseFloat(row.avg_score).toFixed(2)} - avg memories/box: ${parseFloat(row.avg_memories_per_box).toFixed(1)}\n`;
+      output += `  ${row.tier}: ${row.count} cajas - prom: ${parseFloat(row.avg_score).toFixed(2)} - prom memorias/caja: ${parseFloat(row.avg_memories_per_box).toFixed(1)}\n`;
     }
   }
 
@@ -188,26 +188,26 @@ export async function get_pheromone_distribution(
 
 export const get_pheromone_distribution_tool = {
   name: 'get_pheromone_distribution',
-  description: 'Analyze pheromone score distribution across memory types',
+  description: 'Analizar distribución de puntuación de feromonas entre tipos de memoria',
   inputSchema: GetPheromoneDistributionSchema
 };
 ```
 
 ---
 
-### 3. Memory Quality Analysis
+### 3. Análisis de Calidad de Memoria
 
-**Tool**: `analyze_memory_quality`
+**Herramienta**: `analyze_memory_quality`
 
-**Purpose**: Identify quality issues and suggest improvements
+**Propósito**: Identificar problemas de calidad y sugerir mejoras
 
-**Implementation**:
+**Implementación**:
 
 ```typescript
 export async function analyze_memory_quality(pool: Pool): Promise<string> {
-  let output = `🔍 Memory Quality Analysis\n\n`;
+  let output = `🔍 Análisis de Calidad de Memoria\n\n`;
 
-  // 1. Stale memories (not accessed recently)
+  // 1. Memorias obsoletas (no accedidas recientemente)
   const staleQuery = `
     SELECT COUNT(*) as stale_count
     FROM debugging_facts
@@ -215,9 +215,9 @@ export async function analyze_memory_quality(pool: Pool): Promise<string> {
       AND pheromone_score < 10
   `;
   const stale = await pool.query(staleQuery);
-  output += `Stale Memories (>90 days, low pheromone): ${stale.rows[0].stale_count}\n`;
+  output += `Memorias Obsoletas (>90 días, feromona baja): ${stale.rows[0].stale_count}\n`;
 
-  // 2. Missing embeddings
+  // 2. Incrustaciones faltantes
   const missingEmbeddingsQuery = `
     SELECT COUNT(*) as missing
     FROM debugging_facts df
@@ -225,18 +225,18 @@ export async function analyze_memory_quality(pool: Pool): Promise<string> {
     WHERE e.memory_id IS NULL
   `;
   const missing = await pool.query(missingEmbeddingsQuery);
-  output += `Missing Embeddings: ${missing.rows[0].missing}\n`;
+  output += `Incrustaciones Faltantes: ${missing.rows[0].missing}\n`;
 
-  // 3. Never accessed memories
+  // 3. Memorias nunca accedidas
   const neverAccessedQuery = `
     SELECT COUNT(*) as never_accessed
     FROM debugging_facts
     WHERE search_count = 0 OR search_count IS NULL
   `;
   const neverAccessed = await pool.query(neverAccessedQuery);
-  output += `Never Accessed: ${neverAccessed.rows[0].never_accessed}\n`;
+  output += `Nunca Accedidas: ${neverAccessed.rows[0].never_accessed}\n`;
 
-  // 4. High-pheromone but never retrieved
+  // 4. Alta feromona pero nunca recuperadas
   const highButUnusedQuery = `
     SELECT COUNT(*) as count
     FROM debugging_facts
@@ -244,9 +244,9 @@ export async function analyze_memory_quality(pool: Pool): Promise<string> {
       AND (retrieval_count = 0 OR retrieval_count IS NULL)
   `;
   const highUnused = await pool.query(highButUnusedQuery);
-  output += `High Pheromone but Never Retrieved: ${highUnused.rows[0].count}\n`;
+  output += `Alta Feromona pero Nunca Recuperadas: ${highUnused.rows[0].count}\n`;
 
-  // 5. Membox coverage
+  // 5. Cobertura de membox
   const memboxCoverageQuery = `
     SELECT
       COUNT(DISTINCT df.fact_id) as total_facts,
@@ -256,24 +256,24 @@ export async function analyze_memory_quality(pool: Pool): Promise<string> {
     LEFT JOIN memory_box_items mbi ON df.fact_id = mbi.memory_id AND mbi.memory_type = 'debugging_fact'
   `;
   const coverage = await pool.query(memboxCoverageQuery);
-  output += `\nMembox Coverage:\n`;
-  output += `  Total Facts: ${coverage.rows[0].total_facts}\n`;
-  output += `  In Boxes: ${coverage.rows[0].facts_in_boxes}\n`;
-  output += `  Coverage: ${parseFloat(coverage.rows[0].coverage_pct).toFixed(1)}%\n`;
+  output += `\nCobertura de Membox:\n`;
+  output += `  Total de Hechos: ${coverage.rows[0].total_facts}\n`;
+  output += `  En Cajas: ${coverage.rows[0].facts_in_boxes}\n`;
+  output += `  Cobertura: ${parseFloat(coverage.rows[0].coverage_pct).toFixed(1)}%\n`;
 
-  // 6. Recommendations
-  output += `\n💡 Recommendations:\n`;
+  // 6. Recomendaciones
+  output += `\n💡 Recomendaciones:\n`;
 
   if (parseInt(stale.rows[0].stale_count) > 100) {
-    output += `  ⚠️  Consider cleaning up ${stale.rows[0].stale_count} stale, low-quality memories\n`;
+    output += `  ⚠️  Considerar limpiar ${stale.rows[0].stale_count} memorias obsoletas de baja calidad\n`;
   }
 
   if (parseInt(missing.rows[0].missing) > 0) {
-    output += `  ⚠️  Regenerate ${missing.rows[0].missing} missing embeddings\n`;
+    output += `  ⚠️  Regenerar ${missing.rows[0].missing} incrustaciones faltantes\n`;
   }
 
   if (parseFloat(coverage.rows[0].coverage_pct) < 50) {
-    output += `  ⚠️  Low membox coverage (${parseFloat(coverage.rows[0].coverage_pct).toFixed(1)}%) - consider running membox bootstrap\n`;
+    output += `  ⚠️  Baja cobertura de membox (${parseFloat(coverage.rows[0].coverage_pct).toFixed(1)}%) - considerar ejecutar bootstrap de membox\n`;
   }
 
   return output;
@@ -281,26 +281,26 @@ export async function analyze_memory_quality(pool: Pool): Promise<string> {
 
 export const analyze_memory_quality_tool = {
   name: 'analyze_memory_quality',
-  description: 'Identify quality issues and provide improvement recommendations',
+  description: 'Identificar problemas de calidad y proporcionar recomendaciones de mejora',
   inputSchema: z.object({})
 };
 ```
 
 ---
 
-### 4. Cleanup Low-Quality Memories
+### 4. Limpiar Memorias de Baja Calidad
 
-**Tool**: `cleanup_low_quality_memories`
+**Herramienta**: `cleanup_low_quality_memories`
 
-**Purpose**: Remove or archive memories below quality threshold
+**Propósito**: Eliminar o archivar memorias debajo del umbral de calidad
 
-**Implementation**:
+**Implementación**:
 
 ```typescript
 const CleanupLowQualityMemoriesSchema = z.object({
-  min_pheromone: z.number().default(3.0).describe('Delete memories below this score'),
-  min_age_days: z.number().default(90).describe('Only delete memories older than this'),
-  dry_run: z.boolean().default(true).describe('Preview deletions without actually deleting')
+  min_pheromone: z.number().default(3.0).describe('Eliminar memorias debajo de esta puntuación'),
+  min_age_days: z.number().default(90).describe('Solo eliminar memorias más antiguas que esto'),
+  dry_run: z.boolean().default(true).describe('Vista previa de eliminaciones sin eliminar realmente')
 });
 
 export async function cleanup_low_quality_memories(
@@ -309,7 +309,7 @@ export async function cleanup_low_quality_memories(
 ): Promise<string> {
   const { min_pheromone, min_age_days, dry_run } = args;
 
-  // Find candidates for deletion
+  // Encontrar candidatos para eliminación
   const findQuery = `
     SELECT fact_id, symptom, pheromone_score, last_accessed, search_count
     FROM debugging_facts
@@ -322,16 +322,16 @@ export async function cleanup_low_quality_memories(
 
   const candidates = await pool.query(findQuery, [min_pheromone]);
 
-  let output = `🧹 Cleanup Low-Quality Memories\n\n`;
-  output += `Criteria:\n`;
-  output += `  Pheromone < ${min_pheromone}\n`;
-  output += `  Age > ${min_age_days} days\n`;
-  output += `  Never searched\n\n`;
+  let output = `🧹 Limpiar Memorias de Baja Calidad\n\n`;
+  output += `Criterios:\n`;
+  output += `  Feromona < ${min_pheromone}\n`;
+  output += `  Edad > ${min_age_days} días\n`;
+  output += `  Nunca buscadas\n\n`;
 
-  output += `Found ${candidates.rows.length} candidates for deletion:\n\n`;
+  output += `Encontrados ${candidates.rows.length} candidatos para eliminación:\n\n`;
 
   if (candidates.rows.length === 0) {
-    return output + `No memories match cleanup criteria. Database is clean! ✨\n`;
+    return output + `No hay memorias que coincidan con los criterios de limpieza. ¡La base de datos está limpia! ✨\n`;
   }
 
   for (const row of candidates.rows.slice(0, 10)) {
@@ -339,14 +339,14 @@ export async function cleanup_low_quality_memories(
   }
 
   if (candidates.rows.length > 10) {
-    output += `  ... and ${candidates.rows.length - 10} more\n`;
+    output += `  ... y ${candidates.rows.length - 10} más\n`;
   }
 
   if (dry_run) {
-    output += `\n⚠️  DRY RUN - No deletions performed.\n`;
-    output += `Set dry_run=false to actually delete these memories.\n`;
+    output += `\n⚠️  EJECUCIÓN DE PRUEBA - No se realizaron eliminaciones.\n`;
+    output += `Establecer dry_run=false para eliminar realmente estas memorias.\n`;
   } else {
-    // Actually delete
+    // Eliminar realmente
     const deleteQuery = `
       DELETE FROM debugging_facts
       WHERE pheromone_score < $1
@@ -356,7 +356,7 @@ export async function cleanup_low_quality_memories(
 
     const deleteResult = await pool.query(deleteQuery, [min_pheromone]);
 
-    output += `\n✅ Deleted ${deleteResult.rowCount} low-quality memories.\n`;
+    output += `\n✅ Eliminadas ${deleteResult.rowCount} memorias de baja calidad.\n`;
   }
 
   return output;
@@ -364,26 +364,26 @@ export async function cleanup_low_quality_memories(
 
 export const cleanup_low_quality_memories_tool = {
   name: 'cleanup_low_quality_memories',
-  description: 'Remove or archive memories below quality threshold (supports dry-run)',
+  description: 'Eliminar o archivar memorias debajo del umbral de calidad (soporta dry-run)',
   inputSchema: CleanupLowQualityMemoriesSchema
 };
 ```
 
 ---
 
-### 5. Rebuild Embeddings
+### 5. Reconstruir Incrustaciones
 
-**Tool**: `rebuild_embeddings`
+**Herramienta**: `rebuild_embeddings`
 
-**Purpose**: Regenerate embeddings for memories missing them
+**Propósito**: Regenerar incrustaciones para memorias que las tienen faltantes
 
-**Implementation**:
+**Implementación**:
 
 ```typescript
 const RebuildEmbeddingsSchema = z.object({
   memory_type: z.enum(['debugging_facts', 'claude_memories', 'all']).default('all'),
-  limit: z.number().default(100).describe('Max embeddings to generate per run'),
-  force: z.boolean().default(false).describe('Regenerate even if embedding exists')
+  limit: z.number().default(100).describe('Máximo de incrustaciones a generar por ejecución'),
+  force: z.boolean().default(false).describe('Regenerar incluso si la incrustación existe')
 });
 
 export async function rebuild_embeddings(
@@ -392,9 +392,9 @@ export async function rebuild_embeddings(
 ): Promise<string> {
   const { memory_type, limit, force } = args;
 
-  let output = `🔄 Rebuild Embeddings\n\n`;
+  let output = `🔄 Reconstruir Incrustaciones\n\n`;
 
-  // Find memories missing embeddings
+  // Encontrar memorias faltantes incrustaciones
   let findQuery: string;
 
   if (memory_type === 'debugging_facts' || memory_type === 'all') {
@@ -408,12 +408,12 @@ export async function rebuild_embeddings(
 
     const missing = await pool.query(findQuery, [limit]);
 
-    output += `Debugging Facts: ${missing.rows.length} embeddings to generate\n`;
+    output += `Hechos de Depuración: ${missing.rows.length} incrustaciones a generar\n`;
 
-    // Note: Actual embedding generation would require calling embedding service
-    // This is a placeholder showing the structure
-    output += `⚠️  Embedding generation requires external service (sentence-transformers)\n`;
-    output += `   Use: python3 scripts/generate_embeddings.py --limit ${limit}\n`;
+    // Nota: La generación real de incrustaciones requeriría llamar al servicio de incrustaciones
+    // Esto es un marcador de posición mostrando la estructura
+    output += `⚠️  La generación de incrustaciones requiere servicio externo (sentence-transformers)\n`;
+    output += `   Usar: python3 scripts/generate_embeddings.py --limit ${limit}\n`;
   }
 
   return output;
@@ -421,26 +421,26 @@ export async function rebuild_embeddings(
 
 export const rebuild_embeddings_tool = {
   name: 'rebuild_embeddings',
-  description: 'Regenerate embeddings for memories missing them',
+  description: 'Regenerar incrustaciones para memorias que las tienen faltantes',
   inputSchema: RebuildEmbeddingsSchema
 };
 ```
 
 ---
 
-### 6. Check Membox Status
+### 6. Verificar Estado de Membox
 
-**Tool**: `check_membox_status`
+**Herramienta**: `check_membox_status`
 
-**Purpose**: Verify if membox system is working correctly
+**Propósito**: Verificar si el sistema membox funciona correctamente
 
-**Implementation**:
+**Implementación**:
 
 ```typescript
 export async function check_membox_status(pool: Pool): Promise<string> {
-  let output = `📦 Membox System Status\n\n`;
+  let output = `📦 Estado del Sistema Membox\n\n`;
 
-  // 1. Check if tables exist
+  // 1. Verificar si existen tablas
   const tablesQuery = `
     SELECT tablename
     FROM pg_tables
@@ -452,18 +452,18 @@ export async function check_membox_status(pool: Pool): Promise<string> {
   const tables = await pool.query(tablesQuery);
   const tableNames = tables.rows.map(r => r.tablename);
 
-  output += `Required Tables:\n`;
-  output += `  memory_boxes: ${tableNames.includes('memory_boxes') ? '✅' : '❌ MISSING'}\n`;
-  output += `  memory_box_items: ${tableNames.includes('memory_box_items') ? '✅' : '❌ MISSING'}\n`;
-  output += `  trace_links: ${tableNames.includes('trace_links') ? '✅' : '❌ MISSING'}\n\n`;
+  output += `Tablas Requeridas:\n`;
+  output += `  memory_boxes: ${tableNames.includes('memory_boxes') ? '✅' : '❌ FALTANTE'}\n`;
+  output += `  memory_box_items: ${tableNames.includes('memory_box_items') ? '✅' : '❌ FALTANTE'}\n`;
+  output += `  trace_links: ${tableNames.includes('trace_links') ? '✅' : '❌ FALTANTE'}\n\n`;
 
   if (tableNames.length < 3) {
-    output += `⚠️  Membox tables missing! Run schema migration:\n`;
+    output += `⚠️  ¡Tablas de membox faltantes! Ejecutar migración de esquema:\n`;
     output += `   psql -d mempheromone -f schema/membox_tables.sql\n`;
     return output;
   }
 
-  // 2. Check if boxes exist
+  // 2. Verificar si existen cajas
   const boxCountQuery = `
     SELECT
       COUNT(*) as total_boxes,
@@ -477,32 +477,32 @@ export async function check_membox_status(pool: Pool): Promise<string> {
   const boxStats = await pool.query(boxCountQuery);
   const stats = boxStats.rows[0];
 
-  output += `Memory Boxes:\n`;
+  output += `Cajas de Memoria:\n`;
   output += `  Total: ${stats.total_boxes}\n`;
-  output += `  Active: ${stats.active_boxes}\n`;
-  output += `  Avg Memories/Box: ${parseFloat(stats.avg_memories_per_box || 0).toFixed(1)}\n`;
-  output += `  Max Memories in Box: ${stats.max_memories_in_box || 0}\n`;
-  output += `  Avg Pheromone: ${parseFloat(stats.avg_pheromone || 0).toFixed(2)}\n\n`;
+  output += `  Activas: ${stats.active_boxes}\n`;
+  output += `  Prom Memorias/Caja: ${parseFloat(stats.avg_memories_per_box || 0).toFixed(1)}\n`;
+  output += `  Máx Memorias en Caja: ${stats.max_memories_in_box || 0}\n`;
+  output += `  Prom Feromona: ${parseFloat(stats.avg_pheromone || 0).toFixed(2)}\n\n`;
 
   if (parseInt(stats.total_boxes) === 0) {
-    output += `⚠️  No memory boxes exist! Membox system not bootstrapped.\n`;
-    output += `   Run: python3 scripts/mempheromone_membox.py bootstrap\n\n`;
+    output += `⚠️  ¡No existen cajas de memoria! Sistema membox no inicializado.\n`;
+    output += `   Ejecutar: python3 scripts/mempheromone_membox.py bootstrap\n\n`;
   }
 
-  // 3. Check trace links
+  // 3. Verificar enlaces de rastreo
   const linksQuery = `
     SELECT COUNT(*) as total_links
     FROM trace_links
   `;
 
   const links = await pool.query(linksQuery);
-  output += `Trace Links: ${links.rows[0].total_links}\n\n`;
+  output += `Enlaces de Rastreo: ${links.rows[0].total_links}\n\n`;
 
   if (parseInt(links.rows[0].total_links) === 0 && parseInt(stats.total_boxes) > 0) {
-    output += `⚠️  No trace links exist but boxes do. Trace weaver may not be running.\n\n`;
+    output += `⚠️  No existen enlaces de rastreo pero sí cajas. El tejedor de rastreo puede no estar ejecutándose.\n\n`;
   }
 
-  // 4. Recent activity
+  // 4. Actividad reciente
   const recentActivityQuery = `
     SELECT
       MAX(created_at) as last_box_created,
@@ -518,51 +518,51 @@ export async function check_membox_status(pool: Pool): Promise<string> {
     const daysSinceCreated = Math.floor((Date.now() - lastCreated.getTime()) / (1000 * 60 * 60 * 24));
     const daysSinceUpdated = Math.floor((Date.now() - lastUpdated.getTime()) / (1000 * 60 * 60 * 24));
 
-    output += `Recent Activity:\n`;
-    output += `  Last Box Created: ${daysSinceCreated} days ago\n`;
-    output += `  Last Box Updated: ${daysSinceUpdated} days ago\n\n`;
+    output += `Actividad Reciente:\n`;
+    output += `  Última Caja Creada: hace ${daysSinceCreated} días\n`;
+    output += `  Última Caja Actualizada: hace ${daysSinceUpdated} días\n\n`;
 
     if (daysSinceUpdated > 7) {
-      output += `⚠️  No recent updates to boxes (${daysSinceUpdated} days). Membox may not be integrated into workflow.\n`;
-      output += `   Check if membox is called when new memories are stored.\n\n`;
+      output += `⚠️  Sin actualizaciones recientes a cajas (${daysSinceUpdated} días). Membox puede no estar integrado en el flujo de trabajo.\n`;
+      output += `   Verificar si membox se llama cuando se almacenan nuevas memorias.\n\n`;
     } else {
-      output += `✅ Membox system is actively being used!\n\n`;
+      output += `✅ ¡El sistema membox se está usando activamente!\n\n`;
     }
   }
 
-  // 5. Overall status
+  // 5. Estado general
   const isWorking =
     tableNames.length === 3 &&
     parseInt(stats.total_boxes) > 0 &&
     parseInt(links.rows[0].total_links) > 0 &&
     activity.rows[0].last_box_updated;
 
-  output += `Overall Status: ${isWorking ? '✅ WORKING' : '⚠️  NEEDS ATTENTION'}\n`;
+  output += `Estado General: ${isWorking ? '✅ FUNCIONANDO' : '⚠️  NECESITA ATENCIÓN'}\n`;
 
   return output;
 }
 
 export const check_membox_status_tool = {
   name: 'check_membox_status',
-  description: 'Verify if membox system (topic-continuous memory) is working correctly',
+  description: 'Verificar si el sistema membox (memoria de continuidad temática) funciona correctamente',
   inputSchema: z.object({})
 };
 ```
 
 ---
 
-### 7. Optimize Database
+### 7. Optimizar Base de Datos
 
-**Tool**: `optimize_database`
+**Herramienta**: `optimize_database`
 
-**Purpose**: Run VACUUM ANALYZE and optimize query performance
+**Propósito**: Ejecutar VACUUM ANALYZE y optimizar el rendimiento de consultas
 
-**Implementation**:
+**Implementación**:
 
 ```typescript
 const OptimizeDatabaseSchema = z.object({
-  full_vacuum: z.boolean().default(false).describe('Run VACUUM FULL (requires exclusive lock)'),
-  reindex: z.boolean().default(false).describe('Rebuild all indexes')
+  full_vacuum: z.boolean().default(false).describe('Ejecutar VACUUM FULL (requiere bloqueo exclusivo)'),
+  reindex: z.boolean().default(false).describe('Reconstruir todos los índices')
 });
 
 export async function optimize_database(
@@ -571,22 +571,22 @@ export async function optimize_database(
 ): Promise<string> {
   const { full_vacuum, reindex } = args;
 
-  let output = `⚙️  Database Optimization\n\n`;
+  let output = `⚙️  Optimización de Base de Datos\n\n`;
 
   try {
     // 1. VACUUM ANALYZE
-    output += `Running VACUUM ANALYZE...\n`;
+    output += `Ejecutando VACUUM ANALYZE...\n`;
     if (full_vacuum) {
       await pool.query('VACUUM FULL ANALYZE');
-      output += `  ✅ VACUUM FULL ANALYZE complete (reclaimed disk space)\n`;
+      output += `  ✅ VACUUM FULL ANALYZE completo (espacio en disco recuperado)\n`;
     } else {
       await pool.query('VACUUM ANALYZE');
-      output += `  ✅ VACUUM ANALYZE complete (updated statistics)\n`;
+      output += `  ✅ VACUUM ANALYZE completo (estadísticas actualizadas)\n`;
     }
 
-    // 2. Reindex if requested
+    // 2. Reindexar si se solicitó
     if (reindex) {
-      output += `\nRebuilding indexes...\n`;
+      output += `\nReconstruyendo índices...\n`;
 
       const indexes = [
         'idx_debugging_facts_pheromone',
@@ -605,14 +605,14 @@ export async function optimize_database(
       }
     }
 
-    // 3. Update table statistics
-    output += `\nUpdating statistics...\n`;
+    // 3. Actualizar estadísticas de tabla
+    output += `\nActualizando estadísticas...\n`;
     await pool.query('ANALYZE');
-    output += `  ✅ Statistics updated\n`;
+    output += `  ✅ Estadísticas actualizadas\n`;
 
-    output += `\n✅ Database optimization complete!\n`;
+    output += `\n✅ ¡Optimización de base de datos completa!\n`;
   } catch (err) {
-    output += `\n❌ Error during optimization: ${err.message}\n`;
+    output += `\n❌ Error durante optimización: ${err.message}\n`;
   }
 
   return output;
@@ -620,20 +620,20 @@ export async function optimize_database(
 
 export const optimize_database_tool = {
   name: 'optimize_database',
-  description: 'Run VACUUM ANALYZE and optimize query performance',
+  description: 'Ejecutar VACUUM ANALYZE y optimizar el rendimiento de consultas',
   inputSchema: OptimizeDatabaseSchema
 };
 ```
 
 ---
 
-### 8. Backup Memories
+### 8. Respaldar Memorias
 
-**Tool**: `backup_memories`
+**Herramienta**: `backup_memories`
 
-**Purpose**: Export memories to JSON for backup
+**Propósito**: Exportar memorias a JSON para respaldo
 
-**Implementation**:
+**Implementación**:
 
 ```typescript
 const BackupMemoriesSchema = z.object({
@@ -647,10 +647,10 @@ export async function backup_memories(
 ): Promise<string> {
   const { output_path, include_types } = args;
 
-  let output = `💾 Backup Memories\n\n`;
+  let output = `💾 Respaldar Memorias\n\n`;
 
-  // Note: Actual file writing would require filesystem access
-  // This shows the query structure
+  // Nota: La escritura real de archivos requeriría acceso al sistema de archivos
+  // Esto muestra la estructura de consulta
 
   for (const type of include_types) {
     let query: string;
@@ -659,38 +659,38 @@ export async function backup_memories(
     if (type === 'debugging_facts') {
       const result = await pool.query(`SELECT COUNT(*) FROM debugging_facts`);
       count = parseInt(result.rows[0].count);
-      output += `  Debugging Facts: ${count} memories\n`;
+      output += `  Hechos de Depuración: ${count} memorias\n`;
     } else if (type === 'claude_memories') {
       const result = await pool.query(`SELECT COUNT(*) FROM claude_memories`);
       count = parseInt(result.rows[0].count);
-      output += `  Claude Memories: ${count} memories\n`;
+      output += `  Memorias de Claude: ${count} memorias\n`;
     } else if (type === 'crystallizations') {
       const result = await pool.query(`SELECT COUNT(*) FROM crystallization_events`);
       count = parseInt(result.rows[0].count);
-      output += `  Crystallizations: ${count} memories\n`;
+      output += `  Cristalizaciones: ${count} memorias\n`;
     }
   }
 
-  output += `\n⚠️  File export requires filesystem access.\n`;
-  output += `   Use: python3 scripts/backup_memories.py --output ${output_path}\n`;
+  output += `\n⚠️  La exportación de archivos requiere acceso al sistema de archivos.\n`;
+  output += `   Usar: python3 scripts/backup_memories.py --output ${output_path}\n`;
 
   return output;
 }
 
 export const backup_memories_tool = {
   name: 'backup_memories',
-  description: 'Export memories to JSON for backup (returns backup command)',
+  description: 'Exportar memorias a JSON para respaldo (devuelve comando de respaldo)',
   inputSchema: BackupMemoriesSchema
 };
 ```
 
 ---
 
-## Installation
+## Instalación
 
-### 1. Add to MCP Server
+### 1. Agregar al Servidor MCP
 
-Add these tools to your MCP server's main index:
+Agregar estas herramientas al índice principal de tu servidor MCP:
 
 ```typescript
 // mcp-server/src/index.ts
@@ -701,7 +701,7 @@ import { cleanup_low_quality_memories_tool, cleanup_low_quality_memories } from 
 import { check_membox_status_tool, check_membox_status } from './tools/db_management/check_membox_status';
 import { optimize_database_tool, optimize_database } from './tools/db_management/optimize_database';
 
-// Register tools
+// Registrar herramientas
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
     get_database_stats_tool,
@@ -712,11 +712,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     check_membox_status_tool,
     optimize_database_tool,
     backup_memories_tool,
-    // ... other tools
+    // ... otras herramientas
   ]
 }));
 
-// Handle tool calls
+// Manejar llamadas de herramientas
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
@@ -733,14 +733,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return { content: [{ type: 'text', text: await check_membox_status(pool) }] };
     case 'optimize_database':
       return { content: [{ type: 'text', text: await optimize_database(args, pool) }] };
-    // ... other tools
+    // ... otras herramientas
   }
 });
 ```
 
-### 2. Create Tool Files
+### 2. Crear Archivos de Herramientas
 
-Create directory structure:
+Crear estructura de directorio:
 
 ```bash
 mcp-server/
@@ -758,72 +758,72 @@ mcp-server/
 
 ---
 
-## Usage Examples
+## Ejemplos de Uso
 
-### Daily Health Check
+### Verificación de Salud Diaria
 
 ```typescript
-// Check overall health
+// Verificar salud general
 get_database_stats(include_details=true)
 
-// Check pheromone distribution
+// Verificar distribución de feromonas
 get_pheromone_distribution(memory_type='all')
 
-// Analyze quality
+// Analizar calidad
 analyze_memory_quality()
 
-// Check if membox is working
+// Verificar si membox funciona
 check_membox_status()
 ```
 
-### Weekly Maintenance
+### Mantenimiento Semanal
 
 ```typescript
-// Clean up low-quality memories (dry run first)
+// Limpiar memorias de baja calidad (primero ejecución de prueba)
 cleanup_low_quality_memories(min_pheromone=3.0, min_age_days=90, dry_run=true)
 
-// If satisfied, actually delete
+// Si está satisfecho, eliminar realmente
 cleanup_low_quality_memories(min_pheromone=3.0, min_age_days=90, dry_run=false)
 
-// Optimize database
+// Optimizar base de datos
 optimize_database(full_vacuum=false, reindex=false)
 ```
 
-### Monthly Deep Clean
+### Limpieza Profunda Mensual
 
 ```typescript
-// Rebuild missing embeddings
+// Reconstruir incrustaciones faltantes
 rebuild_embeddings(memory_type='all', limit=500)
 
-// Full vacuum (requires exclusive lock - run during off-hours)
+// Vacuum completo (requiere bloqueo exclusivo - ejecutar en horas no pico)
 optimize_database(full_vacuum=true, reindex=true)
 
-// Backup everything
+// Respaldar todo
 backup_memories(output_path='/backups/mempheromone_monthly.json')
 ```
 
 ---
 
-## Expected Results
+## Resultados Esperados
 
-After implementing these tools, you should have:
+Después de implementar estas herramientas, deberías tener:
 
-✅ **Monitoring**: Real-time database health metrics
-✅ **Quality Control**: Identify and fix quality issues
-✅ **Maintenance**: Automated cleanup and optimization
-✅ **Membox Validation**: Verify membox system is working
-✅ **Backup/Restore**: Data protection
-
----
-
-## Next Steps
-
-1. Implement tools in TypeScript
-2. Add to MCP server tool registry
-3. Test each tool individually
-4. Create automated monitoring dashboard
-5. Set up cron jobs for weekly maintenance
+✅ **Monitoreo**: Métricas de salud de base de datos en tiempo real
+✅ **Control de Calidad**: Identificar y corregir problemas de calidad
+✅ **Mantenimiento**: Limpieza y optimización automatizadas
+✅ **Validación de Membox**: Verificar que el sistema membox funciona
+✅ **Respaldo/Restauración**: Protección de datos
 
 ---
 
-**This is part of the core mempheromone toolkit and should be included in the public repository.**
+## Próximos Pasos
+
+1. Implementar herramientas en TypeScript
+2. Agregar al registro de herramientas del servidor MCP
+3. Probar cada herramienta individualmente
+4. Crear panel de monitoreo automatizado
+5. Configurar cron jobs para mantenimiento semanal
+
+---
+
+**Esto es parte del conjunto de herramientas principales de mempheromone y debe incluirse en el repositorio público.**

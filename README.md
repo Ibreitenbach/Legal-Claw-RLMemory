@@ -2,6 +2,8 @@
 
 Give your AI persistent memory that loads once per session and queries instantly.
 
+[🇪🇸 Versión en Español](README_ES.md)
+
 ## What Is This?
 
 A complete system for AI conversational memory that:

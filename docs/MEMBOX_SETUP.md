@@ -4,6 +4,8 @@
 
 **Status**: ✅ All components ready for deployment
 
+[🇪🇸 Versión en Español](MEMBOX_SETUP_ES.md)
+
 ---
 
 ## What Changed (2026-01-29)
