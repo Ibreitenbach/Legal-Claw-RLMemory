@@ -125,9 +125,74 @@ python3 scripts/find_attorneys.py --zipcode "90001"
 - ✅ Guías de Conozca Sus Derechos (Inglés + Español)
 - ✅ Conexión con abogados pro bono en tu ciudad/estado
 
+### 🤝 Claude Code: Tu Defensor Personal de Investigación de Inmigración
+
+**A diferencia de bases de datos legales genéricas, Claude Code con Legal Hub se convierte en TU defensor:**
+
+**Aprende Tu Situación Única:**
+- Recuerda tu estructura familiar (esposo/a, hijos, padres)
+- Rastrea tu historial de inmigración (visas, aplicaciones, negaciones)
+- Entiende tu cronología (tiempo en EE.UU., fechas límite)
+- Recuerda tus preocupaciones específicas (empleo, escuela, salud)
+
+**Recuerda Cada Paso de Tu Camino:**
+- **Sesión 1:** Explicas tu situación → Claude aprende y la guarda
+- **Sesión 2 (semanas después):** Claude recuerda todo de la Sesión 1
+- **Sesión 10:** Claude ha construido comprensión completa de tu caso
+- **Sesión 50:** Claude conoce toda tu historia de inmigración
+
+**Construye Conocimiento Personalizado:**
+```
+Tu historial de conversación se almacena con puntuaciones de feromona:
+- Preguntas que hiciste → recordadas (puntuación: 12.5)
+- Formularios en los que trabajas → priorizados (puntuación: 15.0)
+- Fechas límite que mencionaste → rastreadas (puntuación: 18.5)
+- Recursos que te ayudaron → aumentados para sesiones futuras (puntuación: 16.2)
+```
+
+**Ejemplo: Cómo Esto Te Ayuda**
+
+**Investigación legal tradicional (cada sesión comienza de cero):**
+```
+Tú: "Necesito ayuda con mi I-485"
+Sistema: "¿Cuál es tu situación?" ← Pregunta cada vez
+Tú: ← Explica todo de nuevo ← Pierdes tiempo repitiendo
+```
+
+**Claude Code con Legal Hub (aprende y recuerda):**
+```
+Sesión 1:
+Tú: "Estoy con H-1B, casado con ciudadano estadounidense, quiero tarjeta verde"
+Claude: ← Aprende tu situación ← Guarda en memoria
+
+Sesión 2 (2 semanas después):
+Tú: "¿Qué documentos necesito para I-485?"
+Claude: "Según tu estatus H-1B y esposo/a ciudadano/a (de nuestra última charla),
+         necesitarás..." ← ¡Ya conoce tu situación!
+
+Sesión 5 (1 mes después):
+Tú: "¡Mi fecha de prioridad acaba de estar actual!"
+Claude: "¡Excelente! Como estás en EE.UU. con H-1B y esposo/a ciudadano/a,
+         puedes presentar I-485 inmediatamente. ¿Recuerdas que discutimos
+         el examen médico - lo has programado?"
+         ← ¡Recuerda todo tu camino!
+```
+
+**Privacidad y Seguridad:**
+- Toda la memoria almacenada **localmente** en tu máquina
+- Sin subidas a la nube de tu información personal
+- Tú controlas tus datos (elimina en cualquier momento)
+- Código abierto - verifica exactamente qué se almacena
+
+**Esto Es Como Tener:**
+- Un asistente legal que recuerda todo sobre tu caso
+- Un asistente de investigación que rastrea todas tus fechas límite
+- Un guía que conoce toda tu historia de inmigración
+- Disponible 24/7, por $0, que nunca olvida
+
 **Ver Guía Completa:** [Guía de Inicio Rápido Legal Hub](examples/legal-research/INICIO_RAPIDO.md)
 
-**IMPORTANTE:** Legal Hub proporciona **información** legal, no **asesoramiento** legal. Siempre consulta con un abogado de inmigración calificado para tu situación específica.
+**IMPORTANTE:** Legal Hub proporciona **información** legal, no **asesoramiento** legal. Claude Code es una herramienta de investigación que aprende tu situación para ayudarte a encontrar información relevante más rápido. Siempre consulta con un abogado de inmigración calificado para tu caso específico.
 
 ---
 

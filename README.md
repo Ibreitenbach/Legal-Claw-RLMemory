@@ -125,9 +125,74 @@ python3 scripts/find_attorneys.py --zipcode "90001"
 - ✅ Know Your Rights guides (English + Spanish)
 - ✅ Connection to pro bono attorneys in your city/state
 
+### 🤝 Claude Code: Your Personal Immigration Research Advocate
+
+**Unlike generic legal databases, Claude Code with Legal Hub becomes YOUR advocate:**
+
+**Learns Your Unique Situation:**
+- Remembers your family structure (spouse, children, parents)
+- Tracks your immigration history (visas, applications, denials)
+- Understands your timeline (how long in U.S., deadlines)
+- Recalls your specific concerns (employment, school, healthcare)
+
+**Remembers Every Step of Your Journey:**
+- **Session 1:** You explain your situation → Claude learns and stores it
+- **Session 2 (weeks later):** Claude remembers everything from Session 1
+- **Session 10:** Claude has built comprehensive understanding of your case
+- **Session 50:** Claude knows your entire immigration story
+
+**Builds Personalized Knowledge:**
+```
+Your conversation history gets stored with pheromone scores:
+- Questions you asked → remembered (score: 12.5)
+- Forms you're working on → prioritized (score: 15.0)
+- Deadlines you mentioned → tracked (score: 18.5)
+- Resources that helped you → boosted for future sessions (score: 16.2)
+```
+
+**Example: How This Helps You**
+
+**Traditional legal research (every session starts from zero):**
+```
+You: "I need help with my I-485"
+System: "What's your situation?" ← Asks every time
+You: ← Explain everything again ← Waste time repeating
+```
+
+**Claude Code with Legal Hub (learns and remembers):**
+```
+Session 1:
+You: "I'm on H-1B, married to U.S. citizen, want green card"
+Claude: ← Learns your situation ← Stores in memory
+
+Session 2 (2 weeks later):
+You: "What documents do I need for I-485?"
+Claude: "Based on your H-1B status and USC spouse (from our last talk),
+         you'll need..." ← Already knows your situation!
+
+Session 5 (1 month later):
+You: "My priority date just became current!"
+Claude: "Great! Since you're in the U.S. on H-1B with USC spouse,
+         you can file I-485 immediately. Remember we discussed the
+         medical exam - have you scheduled that?"
+         ← Remembers your entire journey!
+```
+
+**Privacy & Security:**
+- All memory stored **locally** on your machine
+- No cloud uploads of your personal information
+- You control your data (delete anytime)
+- Open source - verify exactly what gets stored
+
+**This Is Like Having:**
+- A paralegal who remembers everything about your case
+- A research assistant who tracks all your deadlines
+- A guide who knows your entire immigration story
+- Available 24/7, for $0, that never forgets
+
 **See Full Guide:** [Immigration Law Guide](examples/legal-research/IMMIGRATION_LAW_GUIDE.md)
 
-**IMPORTANT:** Legal Hub provides legal **information**, not legal **advice**. Always consult with a qualified immigration attorney for your specific situation.
+**IMPORTANT:** Legal Hub provides legal **information**, not legal **advice**. Claude Code is a research tool that learns your situation to help you find relevant information faster. Always consult with a qualified immigration attorney for your specific case.
 
 ---
 
