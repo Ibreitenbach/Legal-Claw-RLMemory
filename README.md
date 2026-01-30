@@ -6,6 +6,10 @@
 <h3 align="center"><em>Persistent AI Memory for Justice & Liberty</em></h3>
 
 <p align="center">
+  <a href="https://ibreitenbach.github.io/Legal-Claw-RLMemory/START_HERE"><img src="https://img.shields.io/badge/🚀_START_HERE-Step_by_Step_Setup-brightgreen?style=for-the-badge&logo=rocket&logoColor=white" alt="START HERE"/></a>
+</p>
+
+<p align="center">
   <a href="MISSION.md"><img src="https://img.shields.io/badge/FREE-Forever-red?style=for-the-badge&logo=handshake&logoColor=white" alt="FREE Forever"/></a>
   <a href="https://github.com/Ibreitenbach"><img src="https://img.shields.io/badge/Built_in-America-blue?style=for-the-badge&logo=github&logoColor=white" alt="Built in America"/></a>
   <a href="CONTRIBUTING.md"><img src="https://img.shields.io/badge/For_All-Americans-darkblue?style=for-the-badge&logo=heart&logoColor=white" alt="For All Americans"/></a>
